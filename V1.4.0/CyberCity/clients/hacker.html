@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberCity Battle - Defender</title>
+    <title>CyberCity Battle - Hacker</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Orbitron:wght@300;400;700;900&family=Share+Tech+Mono&display=swap"
         rel="stylesheet">
@@ -15,16 +15,45 @@
 </head>
 </head>
 
-<body>
+<body class="hacker-theme">
     <div class="grid-background"></div>
 
-    <div class="header">
-        <h1 class="title">Battle for Cyber City</h1>
-        <div class="role">DEFENDER</div>
-        <div class="header-controls">
-            <div class="budget">Budget: $<span id="budget">100000</span></div>
-            <button class="exit-btn" onclick="exitGame()">EXIT</button>
+    <div class="header-new">
+        <div class="header-top-row">
+            <div class="turn-status-bubble" id="turnStatusBubble">
+                <span id="turnStatusText">OPPONENT'S TURN</span>
+                <span id="turnTimeRemaining">3:00</span>
+                <!-- Hidden timer element for JS compatibility -->
+                <div id="turnTimer" style="display:none;"></div>
+                <button class="skip-btn-header hidden" onclick="skipTurn()" id="skipBtn">SKIP TURN</button>
+            </div>
+            <div class="role-title hacker">HACKER</div>
+            <div class="header-right-group">
+                <img src="bcc_logo.png" alt="BCC Logo" class="header-logo">
+                <button class="exit-btn" onclick="exitGame()">EXIT</button>
+            </div>
         </div>
+        <div class="header-separator"></div>
+    </div>
+
+    <!-- Confirm button above bottom bar -->
+    <div class="header-action-wrapper">
+        <button class="confirm-btn-centered" onclick="confirmAction()" id="confirmBtn">CONFIRM ACTION</button>
+    </div>
+
+    <!-- Fixed Bottom Bar -->
+    <div class="header-bottom-row">
+        <div class="header-separator"></div>
+        <div class="bottom-bar-content">
+            <div class="header-notification-wrapper">
+                <div class="action-notification" id="actionNotification">
+                    <div id="messageLog">
+                        <div>Ready up to begin the battle...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-separator"></div>
     </div>
 
     <!-- System notification banner -->
@@ -38,38 +67,27 @@
         </div>
     </div>
 
-    <div class="turn-status" id="turnStatus">
-        <span id="turnStatusText">YOUR TURN</span>
-        <div class="turn-timer" id="turnTimer">
-            <span id="turnTimeRemaining">3:00</span>
-        </div>
-        <button class="skip-btn-header" onclick="skipTurn()" id="skipBtn">SKIP TURN</button>
-    </div>
-
     <div class="game-container">
         <div class="actions-section">
-            <h2 class="actions-title">ACTIONS</h2>
-            <div class="actions-container defender-actions">
-                <button class="action-btn defender" onclick="selectAction('Firewall', this)">
-                    <div class="action-cost">$9,000</div>
-                    <div class="action-name">Firewall</div>
-                    <div class="action-desc">Blocks unauthorized access and reduces risk at the chosen location.</div>
+            <div class="actions-header">
+                <h2 class="actions-title">ACTIONS</h2>
+                <div class="budget-bubble">Budget: $<span id="budget">100000</span></div>
+            </div>
+            <div class="actions-container">
+                <button class="action-btn hacker" onclick="selectAction('Phishing', this)">
+                    <div class="action-cost">$7,000</div>
+                    <div class="action-name">Phishing</div>
+                    <div class="action-desc">Deceptive social engineering to steal credentials and gain footholds.</div>
                 </button>
-                <button class="action-btn defender" onclick="selectAction('Virus Protection', this)">
-                    <div class="action-cost">$11,000</div>
-                    <div class="action-name">Virus Protection</div>
-                    <div class="action-desc">Deploys antivirus defenses to mitigate virus-based compromises.</div>
+                <button class="action-btn hacker" onclick="selectAction('Virus', this)">
+                    <div class="action-cost">$8,500</div>
+                    <div class="action-name">Virus</div>
+                    <div class="action-desc">Deploy a virus to increase compromise and disrupt defenses.</div>
                 </button>
-                <button class="action-btn defender" onclick="selectAction('Intrusion Detection', this)">
-                    <div class="action-cost">$22,000</div>
-                    <div class="action-name">Intrusion Detection</div>
-                    <div class="action-desc">Detects and disrupts intrusions; can assist on compromised sites (cooldown
-                        applies).</div>
-                </button>
-                <button class="action-btn defender" onclick="selectAction('User Training', this)">
-                    <div class="action-cost">$10,000</div>
-                    <div class="action-name">User Training</div>
-                    <div class="action-desc">Educates users to reduce social engineering and phishing success.</div>
+                <button class="action-btn hacker" onclick="selectAction('Malware', this)">
+                    <div class="action-cost">$17,000</div>
+                    <div class="action-name">Malware</div>
+                    <div class="action-desc">Install persistent malware to escalate control over the target.</div>
                 </button>
             </div>
         </div>
@@ -82,29 +100,22 @@
         </div>
     </div>
 
-    <!-- Fixed confirm action button -->
-    <button class="confirm-btn" onclick="confirmAction()" id="confirmBtn">CONFIRM<br>ACTION</button>
-
-    <div class="message-log" id="messageLog">
-        <div>Ready up to begin the battle...</div>
-    </div>
-
 
     <!-- Instructions Modal -->
     <div id="instructionsModal" class="modal-overlay">
         <div class="instructions-content">
             <div class="instructions-timer-box" id="instructionsTimer">1:30</div>
-            <h2>Welcome Defender!</h2>
-            <p>You are the <strong>Defender</strong>, and your mission is to protect the city from the
-                Hacker's cyber attacks!</p>
-            <p>Use your defensive arsenal - Firewall, Virus Protection, Intrusion Detection,
-                and User Training - to safeguard the city's infrastructure.</p>
-            <p>Your goal is to keep locations below 75% compromise (they remain protected) and prevent the Hacker from
-                capturing them.</p>
-            <p>The game has 10 rounds with 2 turns each. <strong>You go first to set up defenses</strong>
-                before the Hacker attacks!</p>
-            <p>Each location is worth 1 point, except Lackland (worth 2 points). Protect more locations than the
-                Hacker compromises to win!</p>
+            <h2>Welcome Hacker!</h2>
+            <p>You are the <strong>Hacker</strong>, and your mission is to take control of the city by compromising its
+                locations before the Defender can stop you!</p>
+            <p>Use your arsenal of cyber attacks - Phishing, Virus, and Malware - to systematically compromise the
+                city's infrastructure.</p>
+            <p>Your goal is to get locations to 75+ compromise (they become yours) or 100% compromise (permanently
+                captured).</p>
+            <p>The game has 10 rounds with 2 turns each. The Defender goes first to set up defenses, but <strong>you get
+                    the final round all to yourself</strong> - use it wisely!</p>
+            <p>Each location is worth 1 point, except Lackland (worth 2 points). Compromise more locations than the
+                Defender protects to win!</p>
             <button class="modal-btn" onclick="closeInstructions()">I'M READY</button>
         </div>
     </div>
@@ -140,7 +151,7 @@
         const socket = io();
         let selectedAction = null;
         let selectedLocation = null;
-        let isMyTurn = true; // Defender starts first
+        let isMyTurn = false;
         let isReady = false;
         let gameStarted = false;
 
@@ -158,11 +169,10 @@
 
         let turnTimeRemaining = 180; // 3 minutes
         let playerBudget = 100000;
-        let intrusionCooldown = 0;
 
         // Initialize the game
         function initGame() {
-            socket.emit('login', 'Defender');
+            socket.emit('login', 'Hacker');
             createLocationCards();
             showInstructions();
         }
@@ -212,7 +222,7 @@
             }
 
             document.getElementById('instructionsModal').style.display = 'none';
-            socket.emit('instructions_closed', { side: 'Defender' });
+            socket.emit('instructions_closed', { side: 'Hacker' });
 
             // Show waiting overlay until game starts
             document.getElementById('waitingOverlay').style.display = 'flex';
@@ -229,7 +239,7 @@
                 if (instructionsTimeRemaining <= 0) {
                     clearInterval(instructionsTimerInterval);
                     instructionsTimerInterval = null;
-                    socket.emit('instructions_timeout', { side: 'Defender' });
+                    socket.emit('instructions_timeout', { side: 'Hacker' });
                     window.location.href = '/';
                 }
             }, 1000);
@@ -263,7 +273,7 @@
 
 
         // Turn timer functions
-        function showTurnTimer() {
+        function showTurnTimer(turnTime) {
             // Clear any existing interval first to prevent double-counting
             if (turnTimerInterval) {
                 clearInterval(turnTimerInterval);
@@ -271,7 +281,7 @@
             }
 
             document.getElementById('turnTimer').style.display = 'block';
-            turnTimeRemaining = 180; // 3 minutes
+            turnTimeRemaining = turnTime || 180; // Use provided time or default to 3 minutes
             updateTurnTimer();
 
             turnTimerInterval = setInterval(() => {
@@ -283,9 +293,11 @@
                 if (turnTimeRemaining <= 0) {
                     clearInterval(turnTimerInterval);
                     turnTimerInterval = null;
-                    socket.emit('turn_timeout', { side: 'Defender' });
-                    // Redirect immediately - server will handle kicking both players
-                    window.location.href = '/';
+                    if (isMyTurn) {
+                        socket.emit('turn_timeout', { side: 'Hacker' });
+                        // Redirect immediately - server will handle kicking both players
+                        window.location.href = '/';
+                    }
                 }
             }, 1000);
         }
@@ -312,46 +324,25 @@
 
         // Game action functions
         function selectAction(action, btnElement) {
-            console.log('selectAction called with:', action);
-            console.log('gameStarted:', gameStarted, 'isMyTurn:', isMyTurn);
-
             const actionCosts = {
-                'Firewall': 9000,
-                'Virus Protection': 11000,
-                'Intrusion Detection': 22000,
-                'User Training': 10000
+                'Phishing': 7000,
+                'Virus': 8500,
+                'Malware': 17000
             };
 
             const cost = actionCosts[action];
             if (cost && playerBudget < cost) {
-                console.log('Insufficient funds');
                 alert(`Insufficient Funds!\n\n${action} costs $${cost.toLocaleString()} but you only have $${playerBudget.toLocaleString()}.\n\nChoose a cheaper action or skip your turn.`);
                 return;
             }
 
-            // Check for Intrusion Detection cooldown
-            if (action === 'Intrusion Detection' && intrusionCooldown > 0) {
-                console.log('Intrusion Detection on cooldown');
-                alert(`Intrusion Detection on Cooldown!\n\nIntrusion Detection is still cooling down for ${intrusionCooldown} more turn(s).\n\nPlease choose a different action.`);
+            if (!gameStarted || !isMyTurn) {
+                showBanner('Wait for both players to click \'I\'M READY\' before taking actions.', 'error');
                 return;
             }
 
-            // Only check gameStarted at the very beginning, not during gameplay
-            if (!gameStarted) {
-                console.log('Game not started yet');
-                showBanner('Wait for both players to be ready before taking actions.', 'error');
-                return;
-            }
-
-            if (!isMyTurn) {
-                console.log('Not your turn');
-                showBanner('Wait for your turn.', 'error');
-                return;
-            }
-
-            console.log('Action selected successfully:', action);
             selectedAction = action;
-            socket.emit('action', { side: 'Defender', action });
+            socket.emit('action', { side: 'Hacker', action });
 
             // Update UI
             document.querySelectorAll('.action-btn').forEach(btn => {
@@ -360,11 +351,11 @@
             if (btnElement) {
                 btnElement.classList.add('selected');
             } else if (event && event.target) {
-                // Fallback if btnElement is missing but event exists (shouldn't happen with new calls)
+                // Fallback
                 event.target.closest('.action-btn').classList.add('selected');
             }
 
-            addMessage(`Selected action: ${action}`);
+            addMessage(`Selected action: ${action} `);
         }
 
         function selectLocation(location, cardElement) {
@@ -374,7 +365,7 @@
             }
 
             selectedLocation = location;
-            socket.emit('location', { side: 'Defender', location });
+            socket.emit('location', { side: 'Hacker', location });
 
             // Update UI
             document.querySelectorAll('.location-card').forEach(card => {
@@ -386,16 +377,16 @@
                 event.target.closest('.location-card').classList.add('selected');
             }
 
-            addMessage(`Selected location: ${location}`);
+            addMessage(`Selected location: ${location} `);
         }
 
         function playActionAnimation(action) {
             const overlay = document.getElementById('animation-overlay');
             const actionImage = document.getElementById('action-image');
 
-            // Set image source based on action type - keep spaces and lowercase
+            // Set image source based on action type - convert to lowercase
             const imageName = action.toLowerCase();
-            actionImage.src = `defender_actions/defender_${imageName}.jpeg`;
+            actionImage.src = `hacker_actions/hacker_${imageName}.jpeg`;
 
             // Display overlay and apply animation sequence
             overlay.style.display = 'flex';
@@ -414,7 +405,7 @@
 
             if (!selectedAction || !selectedLocation || !isMyTurn) return;
 
-            socket.emit('confirm_action', { side: 'Defender' });
+            socket.emit('confirm_action', { side: 'Hacker' });
             addMessage(`Executing ${selectedAction} on ${selectedLocation}...`);
 
             // Play the action animation
@@ -428,7 +419,7 @@
                 showBanner('Wait for both players to click \'I\'M READY\' before taking actions.', 'error');
                 return;
             }
-            socket.emit('skip_turn', { side: 'Defender' });
+            socket.emit('skip_turn', { side: 'Hacker' });
             addMessage('Skipped turn');
             resetSelections();
         }
@@ -447,7 +438,7 @@
         function addMessage(message) {
             const log = document.getElementById('messageLog');
             const messageDiv = document.createElement('div');
-            messageDiv.textContent = `${new Date().toLocaleTimeString()}: ${message}`;
+            messageDiv.textContent = `${new Date().toLocaleTimeString()}: ${message} `;
             log.appendChild(messageDiv);
             log.scrollTop = log.scrollHeight;
         }
@@ -471,21 +462,21 @@
             const statusElement = document.getElementById('turnStatusText');
             const skipBtn = document.getElementById('skipBtn');
             const blocker = document.getElementById('turnBlocker');
-            const headerEl = document.querySelector('.header');
-            const turnStatusBar = document.getElementById('turnStatus');
+            const headerEl = document.querySelector('.header-new');
+            const turnStatusBubble = document.getElementById('turnStatusBubble');
 
-            // Ensure blocker top aligns below header so EXIT remains accessible
+            // Ensure blocker is centered on screen
             if (headerEl && blocker) {
-                blocker.style.top = (headerEl.offsetTop + headerEl.offsetHeight) + 'px';
+                blocker.style.top = '0';
             }
 
-            isMyTurn = (turn === 'Defender');
+            isMyTurn = (turn === 'Hacker');
 
             if (isMyTurn) {
                 if (statusElement) statusElement.textContent = 'YOUR TURN';
-                if (turnStatusBar) {
-                    turnStatusBar.classList.remove('opponent-turn');
-                    turnStatusBar.classList.add('your-turn');
+                if (turnStatusBubble) {
+                    turnStatusBubble.classList.remove('opponent-turn');
+                    turnStatusBubble.classList.add('your-turn');
                 }
                 if (skipBtn) skipBtn.classList.remove('hidden');
                 if (blocker) {
@@ -494,13 +485,11 @@
                     blocker.style.display = 'none';
                 }
                 showTurnTimer();
-                showTurnTimer();
-                // addMessage('Your turn!'); // Removed to prevent spam
             } else {
                 if (statusElement) statusElement.textContent = "OPPONENT'S TURN";
-                if (turnStatusBar) {
-                    turnStatusBar.classList.remove('your-turn');
-                    turnStatusBar.classList.add('opponent-turn');
+                if (turnStatusBubble) {
+                    turnStatusBubble.classList.remove('your-turn');
+                    turnStatusBubble.classList.add('opponent-turn');
                 }
                 if (skipBtn) skipBtn.classList.add('hidden');
                 if (blocker) {
@@ -508,11 +497,11 @@
                     blocker.classList.add('active');
                     blocker.style.display = 'flex';
                 }
-                hideTurnTimer();
-                hideTurnTimer();
-                // addMessage("Opponent's turn. Please wait."); // Removed to prevent spam
+                // Don't hide the timer, just let it tick down
+                showTurnTimer(turnTimeRemaining);
             }
         }
+
         function updateLocations(locationData) {
             for (const [location, data] of Object.entries(locationData)) {
                 const infoElement = document.getElementById(`${location}-info`);
@@ -540,7 +529,7 @@
             const title = document.getElementById('gameOverTitle');
             const message = document.getElementById('gameOverMessage');
 
-            if (winner === 'Defender') {
+            if (winner === 'Hacker') {
                 title.textContent = 'VICTORY!';
                 title.style.color = '#00ff00';
             } else {
@@ -548,7 +537,7 @@
                 title.style.color = '#ff0000';
             }
 
-            message.textContent = `Final Score: Hacker ${hackerScore} - Defender ${defenderScore}`;
+            message.textContent = `Final Score: Hacker ${hackerScore} - Defender ${defenderScore} `;
 
             // Add auto-restart timer display
             const timerDisplay = document.createElement('p');
@@ -573,6 +562,9 @@
                 }
             }, 1000);
 
+            // Show modal as overlay popup
+            modal.style.display = 'flex';
+
             // Hide any turn blocker/indicator and timers on game over
             hideTurnTimer();
             const blocker = document.getElementById('turnBlocker');
@@ -582,7 +574,6 @@
                 statusElement.classList.remove('waiting');
                 statusElement.textContent = 'GAME OVER';
             }
-            modal.style.display = 'flex';
         }
 
         function updateAutoRestartTimer() {
@@ -600,7 +591,7 @@
 
         function restartGame() {
             if (autoRestartTimerInterval) clearInterval(autoRestartTimerInterval);
-            socket.emit('restart_game', { clientType: 'Defender' });
+            socket.emit('restart_game', { clientType: 'Hacker' });
         }
 
         // Socket event listeners
@@ -608,7 +599,7 @@
             console.log('Connected to server');
         });
 
-        socket.on('defender_game_message', (message) => {
+        socket.on('hacker_game_message', (message) => {
             addMessage(message);
             // Only show popup for specific important messages
             if (message.includes('Your turn') ||
@@ -622,11 +613,11 @@
             }
         });
 
-        socket.on('budget_update', ({ defenderBudget }) => {
-            playerBudget = defenderBudget;
+        socket.on('budget_update', ({ hackerBudget }) => {
+            playerBudget = hackerBudget;
             const budgetElement = document.getElementById('budget');
             if (budgetElement) {
-                budgetElement.textContent = defenderBudget;
+                budgetElement.textContent = hackerBudget;
             }
         });
 
@@ -638,8 +629,8 @@
             // Mark game as started when we receive turn updates
             gameStarted = true;
 
-            const isMyTurn = data.turn === 'Defender';
-            updateTurnStatus(data.turn); // Call existing function to update UI
+            const isMyTurn = data.turn === 'Hacker';
+            updateTurnStatus(data.turn);
         });
 
         socket.on('game_started_confirmed', () => {
@@ -659,6 +650,7 @@
 
         socket.on('turn_update', (data) => {
             // Handle turn update
+            turnTimeRemaining = data.timeRemaining || 180; // Receive timer from server or default
             updateTurnStatus(data.turn);
             updateTurnTimer();
         });
@@ -667,10 +659,6 @@
             // Show notification popup for important game events
             showPopup(message);
             addMessage(message);
-        });
-
-        socket.on('game_over', ({ winner, hackerScore, defenderScore }) => {
-            showGameOver(winner, hackerScore, defenderScore);
         });
 
         socket.on('update_compromise', (locationData) => {
@@ -699,15 +687,14 @@
         // Handle countdown events from server
         socket.on('ready_up_countdown', ({ timeRemaining }) => {
             // Update ready-up countdown display if needed
-            console.log(`Ready-up countdown: ${timeRemaining} seconds remaining`);
+            console.log(`Ready - up countdown: ${timeRemaining} seconds remaining`);
         });
 
         socket.on('ready_up_countdown_start', ({ timeRemaining }) => {
-            console.log(`Ready-up countdown started: ${timeRemaining} seconds`);
+            console.log(`Ready - up countdown started: ${timeRemaining} seconds`);
         });
 
         socket.on('instructions_countdown', ({ timeRemaining }) => {
-
             // Update instructions timer from server
             instructionsTimeRemaining = timeRemaining;
             updateInstructionsTimer();
@@ -742,12 +729,11 @@
             }, 4000);
         }
 
-        // Keep the turn blocker aligned under the header
+        // Keep the turn blocker centered on screen
         function alignTurnBlocker() {
             const blocker = document.getElementById('turnBlocker');
-            const headerEl = document.querySelector('.header');
-            if (blocker && headerEl) {
-                blocker.style.top = (headerEl.offsetTop + headerEl.offsetHeight) + 'px';
+            if (blocker) {
+                blocker.style.top = '0';
             }
         }
         window.addEventListener('resize', alignTurnBlocker);

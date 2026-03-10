@@ -593,27 +593,49 @@ html {
 .game-container {
     display: flex;
     flex-direction: column;
-    min-height: calc(100vh - 80px);
+    min-height: 100vh;
     padding: 1.5rem;
     gap: 1.5rem;
-    max-width: 1800px;
-    margin: 0 auto;
+    width: 100%;
+    margin: 0;
     background: linear-gradient(180deg, rgba(10, 10, 20, 0.3), rgba(5, 5, 15, 0.5));
-    border-radius: 10px;
+}
+
+/* Header Right Group (Logo + Exit) */
+.header-right-group {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex: 1;
+    justify-content: flex-end;
+}
+
+.header-logo {
+    height: 85px;
+    /* Increased from 60px */
+    width: auto;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+    transition: transform 0.3s ease;
+}
+
+.header-logo:hover {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.6));
 }
 
 /* Actions Section */
 .actions-title,
 .locations-title {
-    font-size: 1.4rem;
-    margin-bottom: 1rem;
+    font-size: 2rem;
+    /* Increased from 1.4rem */
+    margin-bottom: 1.5rem;
     color: var(--text-color);
     text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: 700;
-    text-shadow: 0 0 10px rgba(0, 255, 234, 0.3);
-    border-bottom: 1px solid rgba(0, 255, 234, 0.3);
-    padding-bottom: 0.5rem;
+    letter-spacing: 3px;
+    font-weight: 900;
+    text-shadow: 0 0 15px rgba(0, 255, 234, 0.5);
+    border-bottom: 2px solid rgba(0, 255, 234, 0.5);
+    padding-bottom: 0.8rem;
     display: inline-block;
 }
 
@@ -627,7 +649,8 @@ html {
 .action-btn {
     color: white;
     border: none;
-    padding: 2rem 1rem;
+    padding: 3rem 1rem 1rem 1rem;
+    /* Increased top padding to clear badge */
     border-radius: 15px;
     cursor: pointer;
     font-family: var(--font-secondary);
@@ -636,10 +659,12 @@ html {
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     position: relative;
     overflow: hidden;
-    min-height: 160px;
+    min-height: 180px;
+    /* Slightly taller */
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
+    /* Align content to bottom to avoid top overlap */
     align-items: center;
     text-align: center;
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -683,20 +708,26 @@ html {
 }
 
 .action-name {
-    font-size: 1.3rem;
+    font-size: 1.8rem;
+    /* Increased size */
     margin-bottom: 0.5rem;
     letter-spacing: 1px;
-    padding-right: 90px;
-    /* Space for cost badge */
+    padding-right: 0;
+    /* Removed padding as we are pushing content down */
+    margin-top: 1rem;
+    /* Add space from top */
+    z-index: 2;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .action-desc {
-    font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
     font-weight: 400;
-    background: rgba(0, 0, 0, 0.3);
-    padding: 0.3rem 0.6rem;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 0.4rem 0.8rem;
     border-radius: 4px;
+    line-height: 1.3;
 }
 
 /* Action Cost Badge */
@@ -706,14 +737,15 @@ html {
     right: 10px;
     background: linear-gradient(135deg, #00ff00, #00cc00);
     color: #000;
-    font-size: 0.9rem;
+    font-size: 1.4rem;
     font-weight: 900;
-    padding: 0.4rem 0.8rem;
-    border-radius: 20px;
-    font-family: 'Share Tech Mono', monospace;
-    box-shadow: 0 4px 15px rgba(0, 255, 0, 0.4), inset 0 1px 3px rgba(255, 255, 255, 0.5);
-    letter-spacing: 0.5px;
-    border: 2px solid rgba(0, 0, 0, 0.2);
+    padding: 0.6rem 1.2rem;
+    border-radius: 25px;
+    font-family: var(--font-main);
+    box-shadow: 0 4px 15px rgba(0, 255, 0, 0.6);
+    letter-spacing: 1px;
+    border: 2px solid rgba(0, 0, 0, 0.4);
+    z-index: 5;
 }
 
 /* Point Badge on Location Cards */
@@ -723,22 +755,25 @@ html {
     right: 10px;
     background: linear-gradient(135deg, #ffd700, #ffaa00);
     color: #000;
-    font-size: 0.75rem;
-    font-weight: 900;
-    padding: 0.3rem 0.7rem;
-    border-radius: 15px;
+    font-size: 0.8rem;
+    /* Smaller */
+    font-weight: 700;
+    padding: 0.3rem 0.6rem;
+    border-radius: 12px;
     font-family: 'Orbitron', monospace;
     box-shadow: 0 3px 10px rgba(255, 215, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.4);
     letter-spacing: 1px;
     border: 2px solid rgba(0, 0, 0, 0.2);
     text-transform: uppercase;
+    z-index: 5;
 }
 
 .point-badge.premium {
     background: linear-gradient(135deg, #ff6b6b, #c92a2a);
     color: #fff;
     box-shadow: 0 3px 15px rgba(255, 107, 107, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.3);
-    font-size: 0.85rem;
+    font-size: 0.9rem;
+    /* Smaller */
     animation: pulse-glow 2s infinite;
 }
 
@@ -785,7 +820,8 @@ html {
     min-height: 180px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+    /* Center content */
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
 }
 
@@ -802,14 +838,18 @@ html {
 }
 
 .location-name {
-    font-size: 1.5rem;
+    font-size: 2rem;
+    /* Much Larger */
     font-weight: 700;
     font-family: var(--font-secondary);
     margin-bottom: 1rem;
     color: var(--text-color);
     letter-spacing: 1px;
-    padding-right: 80px;
-    /* Space for point badge */
+    padding-right: 0;
+    /* Removed padding */
+    margin-top: 1rem;
+    /* Space from top badges */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .compromise-info {
@@ -1341,4 +1381,280 @@ html {
         transform: translateX(100%);
         opacity: 0;
     }
+}
+
+/* New Header Layout */
+.header-new {
+    display: flex;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 1rem 2rem;
+    position: relative;
+    z-index: 3001;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+    gap: 1.5rem;
+}
+
+.header-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.header-bottom-row {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 4000;
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.5);
+}
+
+.bottom-bar-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.8rem 2rem;
+    position: relative;
+    width: 100%;
+    gap: 0.5rem;
+}
+
+/* Swapped: Spacer on Left, Notification on Right */
+.header-spacer {
+    display: none;
+}
+
+.header-action-wrapper {
+    position: fixed;
+    bottom: 200px;
+    right: 2rem;
+    z-index: 4001;
+}
+
+.header-notification-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.header-separator {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--text-color), transparent);
+    opacity: 0.5;
+}
+
+/* Turn Status Bubble (Relocated & Enlarged) */
+.turn-status-bubble {
+    background: rgba(20, 20, 40, 0.95);
+    border: 2px solid #444;
+    border-radius: 40px;
+    padding: 0.5rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-family: var(--font-main);
+    font-weight: 900;
+    font-size: 1.8rem;
+    color: white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.turn-status-bubble.your-turn {
+    border-color: #00ff00;
+    box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+    /* Stronger glow */
+    transform: scale(1.05);
+    /* Slight pop */
+}
+
+.turn-status-bubble.opponent-turn {
+    border-color: #ff4444;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+    opacity: 0.8;
+}
+
+.turn-status-bubble span {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    font-family: var(--font-main);
+    /* Ensure numbers use readable font */
+    letter-spacing: 2px;
+}
+
+.skip-btn-header {
+    background: linear-gradient(45deg, #ff9800, #e65100);
+    border: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+    margin-left: auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Role Title (Top Center) */
+.role-title {
+    font-family: var(--font-main);
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    padding: 0.2rem 1.2rem;
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    z-index: 10;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+}
+
+.role-title.defender {
+    color: var(--defender-primary);
+    text-shadow: 0 0 20px var(--defender-glow);
+    border-color: var(--defender-primary);
+}
+
+.role-title.hacker {
+    color: var(--hacker-primary);
+    text-shadow: 0 0 20px var(--hacker-glow);
+    border-color: var(--hacker-primary);
+}
+
+/* Confirm Action Button (in bottom bar) */
+.confirm-btn-centered {
+    background: linear-gradient(180deg, #00ffea, #00aa99);
+    color: #000;
+    border: none;
+    padding: 1rem 3rem;
+    font-family: var(--font-main);
+    font-size: 1.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 0 30px rgba(0, 255, 234, 0.6);
+    transition: all 0.3s ease;
+    letter-spacing: 3px;
+    white-space: nowrap;
+}
+
+.confirm-btn-centered:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 50px rgba(0, 255, 234, 0.9);
+}
+
+.confirm-btn-centered:active {
+    transform: scale(0.95);
+}
+
+/* Action Notification Area */
+.action-notification {
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid #00ffea;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    width: 900px;
+    max-width: 90vw;
+    height: 160px;
+    min-height: 160px;
+    max-height: 160px;
+    overflow-y: auto;
+    font-family: var(--font-secondary);
+    font-size: 1rem;
+    color: #00ffea;
+    box-shadow: inset 0 0 10px rgba(0, 255, 234, 0.2);
+    display: flex;
+    flex-direction: column-reverse;
+    /* Newest at bottom */
+    flex-shrink: 0;
+    flex-grow: 0;
+}
+
+/* Budget Bubble (Relocated) */
+.actions-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(0, 255, 234, 0.3);
+    padding-bottom: 0.5rem;
+}
+
+.budget-bubble {
+    background: rgba(0, 200, 100, 0.2);
+    border: 2px solid #00ff88;
+    /* Thicker border */
+    border-radius: 25px;
+    padding: 0.6rem 1.5rem;
+    font-family: var(--font-main);
+    /* Changed to main font for readability */
+    color: #00ff88;
+    font-weight: 900;
+    /* Bolder */
+    font-size: 1.6rem;
+    /* Larger text */
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+    letter-spacing: 1px;
+}
+
+.budget-bubble::before {
+    content: '💰';
+    font-size: 1.8rem;
+}
+
+/* Action Costs - High Visibility */
+.action-cost {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: linear-gradient(135deg, #00ff00, #00cc00);
+    color: #000;
+    font-size: 1.4rem;
+    /* Larger */
+    font-weight: 900;
+    padding: 0.6rem 1.2rem;
+    border-radius: 25px;
+    font-family: var(--font-main);
+    /* Changed to main font */
+    box-shadow: 0 4px 15px rgba(0, 255, 0, 0.6);
+    letter-spacing: 1px;
+    border: 2px solid rgba(0, 0, 0, 0.4);
+    z-index: 5;
+}
+
+/* Hide old elements */
+.header,
+.turn-status,
+.confirm-btn {
+    display: none !important;
+}
+
+/* Adjust message log to fit in notification area */
+#messageLog {
+    height: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+#messageLog div {
+    margin-bottom: 4px;
+    justify-content: right;
+
 }
